@@ -15,14 +15,12 @@ public class ZombiePathNodeMaker extends LandPathNodeMaker {
 		BlockState state = world.getBlockState(pos);
 
 		if (state.isIn(RelentlessDead.ZOMBIE_CLIMBABLE)) {
-			return PathNodeType.OPEN;
+			return PathNodeType.BLOCKED;
 		}
 
 		if (state.isIn(RelentlessDead.ZOMBIE_BREAKABLE)) {
-			return PathNodeType.OPEN;
+			return PathNodeType.WALKABLE_DOOR;
 		}
-
-
 
 		return super.getNodeType(world, x, y, z, mob, sizeX, sizeY, sizeZ, canOpenDoors, canEnterOpenDoors);
 	}

@@ -21,7 +21,6 @@ public class ZombieNavigation extends MobNavigation {
 
 	@Override
 	public Path findPathTo(Entity entity, int distance) {
-		Path path = super.findPathTo(entity, distance);
-		return path;
+		return super.findPathTo(entity, distance);
 	}
 }

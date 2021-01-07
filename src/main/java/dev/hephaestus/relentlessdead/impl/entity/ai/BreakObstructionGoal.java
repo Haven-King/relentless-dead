@@ -32,7 +32,14 @@ public class BreakObstructionGoal extends Goal {
 
 	@Override
 	public boolean canStart() {
-		return !this.mobEntity.isBaby() && Config.ZOMBIES_BREAK_BLOCKS && this.mobEntity.getTarget() != null && this.mobEntity.isOnGround() && this.isStill() && this.getBreakTarget() != null;
+		boolean bl = this.mobEntity.getNavigation().isFollowingPath();
+		return !this.mobEntity.isBaby()
+				&& Config.ZOMBIES_BREAK_BLOCKS
+				&& this.mobEntity.getTarget() != null
+				&& this.mobEntity.isOnGround()
+				&& !this.mobEntity.getNavigation().isFollowingPath()
+				&& this.isStill()
+				&& this.getBreakTarget() != null;
 	}
 
 	@Override
@@ -59,7 +66,6 @@ public class BreakObstructionGoal extends Goal {
 		this.mobEntity.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, this.breakCenter);
 
 		if (this.mobEntity.getRandom().nextInt(20) == 0) {
-			this.mobEntity.world.syncWorldEvent(1019, this.breakTarget, 0);
 			if (!this.mobEntity.handSwinging) {
 				this.mobEntity.swingHand(this.mobEntity.getActiveHand());
 			}
@@ -104,7 +110,7 @@ public class BreakObstructionGoal extends Goal {
 		for (int i = 0; i < Math.ceil(this.mobEntity.getHeight()); ++i, pos.move(Direction.DOWN, 1)) {
 			Block block = this.mobEntity.world.getBlockState(pos).getBlock();
 
-			if (block.isIn(RelentlessDead.ZOMBIE_BREAKABLE)) {
+			if (block.isIn(RelentlessDead.ZOMBIE_BREAKABLE) && pos.isWithinDistance(this.mobEntity.getPos(), 1)) {
 				return pos;
 			}
 		}
@@ -123,7 +129,7 @@ public class BreakObstructionGoal extends Goal {
 					return null;
 				}
 
-				if (this.mobEntity.world.getBlockState(p).isIn(RelentlessDead.ZOMBIE_BREAKABLE)) {
+				if (this.mobEntity.world.getBlockState(p).isIn(RelentlessDead.ZOMBIE_BREAKABLE) && p.isWithinDistance(this.mobEntity.getPos(), 1)) {
 					return p;
 				}
 			}

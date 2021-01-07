@@ -4,7 +4,10 @@ import dev.hephaestus.climbable.api.ClimbingSpeedRegistry;
 import dev.hephaestus.relentlessdead.api.AngerableEntity;
 import dev.hephaestus.relentlessdead.api.RelentlessDead;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -12,6 +15,7 @@ import java.util.HashMap;
 public class Dead implements ModInitializer {
 	public static final String MOD_ID = "relentless-dead";
 	private static final HashMap<Identifier, Identifier> IDS = new HashMap<>();
+	public static final Tag<Block> LADDER_LIKE = TagRegistry.block(id("ladder_like"));
 
 	@Override
 	public void onInitialize() {
